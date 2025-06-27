@@ -19,3 +19,20 @@ def load_tasks():
             except:
                 continue
         return tasks
+def save_tasks():
+    with open(TASKS_FILE, "w") as file:
+        for task in tasks:
+            line = f'{task["task"]}||{task["due"]}||{"1" if task["done"] else "0"}\n'
+            file.write(line)
+def add_task():
+    task = task_entry.get()
+    if task:
+        due_input = simpledialog.askstring("Due Date", "Enter due date (YYYY-MM-DD HH:MM):")
+        try:
+            due_date = datetime.strptime(due_input, DATE_FORMAT)
+            tasks.append({"task": task, "due": due_input, "done": False})
+            update_task_list()
+            save_tasks()
+            task_entry.delete(0, tk.END)
+        except:
+            messagebox.showerror("Invalid", "Please enter due date in YYYY-MM-DD HH:MM format")

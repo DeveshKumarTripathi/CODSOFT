@@ -36,3 +36,20 @@ def add_task():
             task_entry.delete(0, tk.END)
         except:
             messagebox.showerror("Invalid", "Please enter due date in YYYY-MM-DD HH:MM format")
+def delete_task():
+    try:
+        selected = task_listbox.curselection()[0]
+        tasks.pop(selected)
+        update_task_list()
+        save_tasks()
+    except IndexError:
+        messagebox.showwarning("Warning", "No task selected")
+def mark_done():
+    try:
+        selected = task_listbox.curselection()[0]
+        tasks[selected]["done"] = not tasks[selected]["done"]
+        update_task_list()
+        save_tasks()
+    except IndexError:
+        messagebox.showwarning("Warning", "No task selected")
+

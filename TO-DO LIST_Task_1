@@ -52,4 +52,20 @@ def mark_done():
         save_tasks()
     except IndexError:
         messagebox.showwarning("Warning", "No task selected")
+def sort_tasks():
+    tasks.sort(key=lambda x: datetime.strptime(x["due"], DATE_FORMAT))
+    update_task_list()
+def show_upcoming():
+    now = datetime.now()
+    upcoming = [t for t in tasks if datetime.strptime(t["due"], DATE_FORMAT) < now + timedelta(hours=24)]
+    if not upcoming:
+        messagebox.showinfo("Upcoming", "No tasks due in next 24 hours")
+        return
+    msg = "\n".join([f'{t["task"]} (Due: {t["due"]})' for t in upcoming])
+    messagebox.showinfo("Upcoming Tasks", msg)
+def update_task_list():
+    task_listbox.delete(0, tk.END)
+    for t in tasks:
+        label = f'{"[✔] " if t["done"] else ""}{t["task"]} - Due: {t["due"]}'
+        task_listbox.insert(tk.END, label)
 

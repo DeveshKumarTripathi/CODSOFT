@@ -68,4 +68,14 @@ def update_task_list():
     for t in tasks:
         label = f'{"[✔] " if t["done"] else ""}{t["task"]} - Due: {t["due"]}'
         task_listbox.insert(tk.END, label)
+# --- GUI Setup ---
+root = tk.Tk()
+root.title("🗂 To-Do List with Due Dates")
+root.geometry("500x600")
+root.configure(bg="#1e1e1e")
 
+tasks = load_tasks()
+
+# Task Entry
+task_entry = tk.Entry(root, font=("Helvetica", 14), bg="#2b2b2b", fg="#f0f0f0", insertbackground="white")
+task_entry.pack(pady=20, padx=20, fill=tk.X)

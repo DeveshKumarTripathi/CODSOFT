@@ -79,3 +79,9 @@ tasks = load_tasks()
 # Task Entry
 task_entry = tk.Entry(root, font=("Helvetica", 14), bg="#2b2b2b", fg="#f0f0f0", insertbackground="white")
 task_entry.pack(pady=20, padx=20, fill=tk.X)
+# Button Frame
+button_frame = tk.Frame(root, bg="#1e1e1e")
+button_frame.pack(pady=10)
+
+add_button = tk.Button(button_frame, text="Add Task", command=add_task, bg="#007acc", fg="white", width=12)
+add_button.grid(row=0, column=0, padx=5)

@@ -93,4 +93,9 @@ delete_button.grid(row=0, column=2, padx=5)
 # Sort and Reminder Buttons
 sort_button = tk.Button(root, text="Sort by Due Date", command=sort_tasks, bg="#6f42c1", fg="white")
 sort_button.pack(pady=5)
+# Task List Display
+task_listbox = tk.Listbox(root, font=("Helvetica", 13), bg="#2b2b2b", fg="#f0f0f0", selectbackground="#444444", selectforeground="#ffffff")
+task_listbox.pack(pady=20, padx=20, fill=tk.BOTH, expand=True)
 
+update_task_list()
+root.mainloop()

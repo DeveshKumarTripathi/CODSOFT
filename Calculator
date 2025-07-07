@@ -11,4 +11,17 @@ class FancyCalculatorApp:
         self.input_text = tk.StringVar()
         self.create_styles()
         self.create_widgets()
+    def create_styles(self):
+        style = ttk.Style()
+        style.theme_use('clam')
+        style.configure("TButton",
+                        font=("Helvetica", 14, "bold"),
+                        padding=10,
+                        relief="flat",
+                        background="#61afef",
+                        foreground="white")
+         style.map("TButton",
+                  background=[("active", "#528bff")])
+
+
 

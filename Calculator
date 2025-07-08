@@ -22,6 +22,16 @@ class FancyCalculatorApp:
                         foreground="white")
          style.map("TButton",
                   background=[("active", "#528bff")])
+    def create_widgets(self):
+        entry_frame = tk.Frame(self.root, bg="#282c34")
+        entry_frame.pack(pady=20)
+
+        entry = tk.Entry(entry_frame, textvariable=self.input_text,
+                         font=('Helvetica', 22), width=18, bd=0, bg="#abb2bf", fg="#282c34",
+                         justify='right', relief='flat')
+        entry.pack(ipady=10)
+        button_frame = tk.Frame(self.root, bg="#282c34")
+        button_frame.pack()
 
 
 

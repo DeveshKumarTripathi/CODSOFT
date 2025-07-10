@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import math
+
 class FancyCalculatorApp:
     def _init_(self, root):
         self.root = root
@@ -11,17 +12,21 @@ class FancyCalculatorApp:
         self.input_text = tk.StringVar()
         self.create_styles()
         self.create_widgets()
+
     def create_styles(self):
         style = ttk.Style()
         style.theme_use('clam')
+
         style.configure("TButton",
                         font=("Helvetica", 14, "bold"),
                         padding=10,
                         relief="flat",
                         background="#61afef",
                         foreground="white")
-         style.map("TButton",
+
+        style.map("TButton",
                   background=[("active", "#528bff")])
+
     def create_widgets(self):
         entry_frame = tk.Frame(self.root, bg="#282c34")
         entry_frame.pack(pady=20)
@@ -30,8 +35,64 @@ class FancyCalculatorApp:
                          font=('Helvetica', 22), width=18, bd=0, bg="#abb2bf", fg="#282c34",
                          justify='right', relief='flat')
         entry.pack(ipady=10)
+
         button_frame = tk.Frame(self.root, bg="#282c34")
         button_frame.pack()
+
+        # Button layout
+        buttons = [
+            ['7', '8', '9', '/', 'C'],
+            ['4', '5', '6', '*', 'sqrt'],
+            ['1', '2', '3', '-', '^'],
+            ['0', '.', '=', '+', 'log'],
+            ['(', ')', 'sin', 'cos', 'tan'],
+        ]
+
+        for row in buttons:
+            row_frame = tk.Frame(button_frame, bg="#282c34")
+            row_frame.pack(pady=5)
+            for btn in row:
+                self.create_button(row_frame, btn)
+
+        exit_btn = ttk.Button(self.root, text="🚪 Exit", command=self.root.quit)
+        exit_btn.pack(pady=20)
+
+    def create_button(self, parent, char):
+        btn = ttk.Button(parent, text=char, command=lambda ch=char: self.on_button_click(ch))
+        btn.pack(side='left', padx=5, ipadx=8)
+
+    def on_button_click(self, char):
+        if char == 'C':
+            self.expression = ""
+            self.input_text.set("")
+        elif char == '=':
+            try:
+                expr = self.expression.replace('sqrt', 'math.sqrt')\
+                                      .replace('^', '')\
+                                      .replace('log', 'math.log10')\
+                                      .replace('sin', 'math.sin(math.radians')\
+                                      .replace('cos', 'math.cos(math.radians')\
+                                      .replace('tan', 'math.tan(math.radians')
+                expr = expr + ')' * (expr.count('(') - expr.count(')'))
+                result = eval(expr)
+                self.input_text.set(result)
+                self.expression = str(result)
+            except:
+                self.input_text.set("Error")
+                self.expression = ""
+        else:
+            if char in ['sin', 'cos', 'tan']:
+                self.expression += f"{char}("
+            else:
+                self.expression += str(char)
+            self.input_text.set(self.expression)
+
+# Run the calculator
+if _name_ == "_main_":
+    root = tk.Tk()
+    app = FancyCalculatorApp(root)
+    root.mainloop()
+
 
 
 
